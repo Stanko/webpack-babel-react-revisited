@@ -3,6 +3,7 @@
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin'); //  -> ADDED IN THIS STEP
 
 // Constant with our paths
 const paths = {
@@ -23,8 +24,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(paths.SRC, 'index.html'),
     }),
+    new ExtractTextPlugin('style.bundle.css'), // CSS will be extracted to this bundle file -> ADDED IN THIS STEP
   ],
-  // Loaders configuration -> ADDED IN THIS STEP
+  // Loaders configuration
   // We are telling webpack to use "babel-loader" for .js and .jsx files
   module: {
     rules: [
@@ -35,9 +37,26 @@ module.exports = {
           'babel-loader',
         ],
       },
+      // CSS loader for CSS files
+      // Files will get handled by css loader and then passed to the extract text plugin
+      // which will write it to the file we defined above
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          use: 'css-loader',
+        }),
+      },
+      // File loader for image assets -> ADDED IN THIS STEP
+      // We'll add only image extensions, but you can things like svgs, fonts and videos
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          'file-loader',
+        ],
+      },
     ],
   },
-  // Enable importing JS files without specifying their's extenstion -> ADDED IN THIS STEP
+  // Enable importing JS files without specifying their's extenstion
   //
   // So we can write:
   // import MyComponent from './my-component';
