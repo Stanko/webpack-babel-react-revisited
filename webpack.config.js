@@ -47,7 +47,7 @@ module.exports = {
         }),
       },
       // File loader for image assets -> ADDED IN THIS STEP
-      // We'll add only image extensions, but you can things like svgs, fonts and videos
+      // We'll add only image extensions, but you can add things like svgs, fonts and videos
       {
         test: /\.(png|jpg|gif)$/,
         use: [
@@ -56,7 +56,7 @@ module.exports = {
       },
     ],
   },
-  // Enable importing JS files without specifying their's extenstion
+  // Enable importing JS files without specifying their's extension
   //
   // So we can write:
   // import MyComponent from './my-component';
